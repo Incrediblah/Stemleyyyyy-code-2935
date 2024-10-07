@@ -26,7 +26,7 @@ public class SwerveJoystickCmd extends Command {
             this.ySpdFunction = ySpdFunction;
             this.turningSpdFunction = turningSpdFunction;
             this.fieldOrientedFunction = fieldOrientedFunction;
-            this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+           this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
             this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
             this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
             addRequirements(swerveSubsystem);
@@ -44,9 +44,9 @@ public class SwerveJoystickCmd extends Command {
         double ySpeed = ySpdFunction.get();
         double turningSpeed = turningSpdFunction.get();
 
-        xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
-        ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
-        turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
+        xSpeed = Math.abs(xSpeed) > OIConstants.kDriveDeadband ? xSpeed : 0.0;
+        ySpeed = Math.abs(ySpeed) > OIConstants.kDriveDeadband ? ySpeed : 0.0;
+        turningSpeed = Math.abs(turningSpeed) > OIConstants.kDriveDeadband ? turningSpeed : 0.0;
 
         xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kMaxSpeedMetersPerSecond;
         ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kMaxSpeedMetersPerSecond;

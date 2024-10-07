@@ -31,8 +31,9 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Commands.intakeCmd;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.Subsystems.IntakeSubsystem;
+import frc.robot.Subsystems.ConveyorSubsystem;
+import frc.robot.Subsystems.DriveSubsystem;
 import java.util.List;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
@@ -48,6 +49,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
    private final IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
+   private final ConveyorSubsystem ConveyorSubsystem = new ConveyorSubsystem();
 
   // The driver's controller
   //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);

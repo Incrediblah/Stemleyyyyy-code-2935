@@ -5,13 +5,13 @@
 package frc.robot.Subsystems;
  
 import com.revrobotics.CANSparkFlex;
-import com.revrobotics.CANSparkMax;
+//import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
+//import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
@@ -25,40 +25,21 @@ public class IntakeSubsystem extends SubsystemBase {
   private RelativeEncoder intake_encoder = intake_motor.getEncoder();
 
   /** Creates a new INTAKE_SUBSYSTEM. */
-  public IntakeSubsystem() {
-        // RESTORE SETTINGS 
-        intake_motor.restoreFactoryDefaults();
-        
-        intake_motor.setSmartCurrentLimit(50); 
-        // INVERT 
-        intake_motor.setInverted(false);
-        // SET POSITION TO 0 
-        intake_encoder.setPosition(0);
-        // LOAD CONFIG 
-        intake_motor.burnFlash();
+  public IntakeSubsystem() { 
+    intake_motor.restoreFactoryDefaults();    // restore motor settings to factory defult
+    intake_motor.setSmartCurrentLimit(50);    // Set the current limit of the motor
+    intake_motor.setInverted(false);    // Set motor to not inverted
+    intake_encoder.setPosition(0);    // Set encoder position to zero
+    intake_motor.burnFlash();   // Burn and flash the new settings to the motor controller
 
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-     // This method will be called once per scheduler run
-     // PRINT INTAKE POSITION
-     SmartDashboard.putNumber(INTAKE_PREFIX + "intake encoder", getintake_encoderPosition()); 
-     
-     // PRINT INTAKE VELOCITY   
-     SmartDashboard.putNumber(INTAKE_PREFIX + "intake velocity", getintake_encoderVelocity()); 
- 
-     // PRINT MOTOR CURRENT USAGE 
-     SmartDashboard.putNumber(INTAKE_PREFIX + "intake current", getIntake_EncoderCurrent()); 
-
-     //  PRINT HAS INTAKED 
-     SmartDashboard.putBoolean(INTAKE_PREFIX + "has intaked", has_intaked()); 
-
+    SmartDashboard.putBoolean(INTAKE_PREFIX + "has intaked", has_intaked()); 
   }
 
-
-    // SET TO BRAKE MODE 
+  // SET TO BRAKE MODE 
   public void setBrakeMode(){
     intake_motor.setIdleMode(IdleMode.kBrake); 
   }
@@ -102,13 +83,9 @@ public class IntakeSubsystem extends SubsystemBase {
     intake_motor.getPIDController().setFF(f); 
   }
 
-
-
   public void setIntakeEncoderOutputConstraints(double min, double max){
     intake_motor.getPIDController().setOutputRange(min, max); 
   }
-
-
 
   public void setIntakeVelocityMode(){
     intake_motor.getPIDController().setReference(0, ControlType.kVelocity); 
@@ -121,7 +98,6 @@ public class IntakeSubsystem extends SubsystemBase {
   public void setVelocityIntake(double topVelocity){
     intake_motor.getPIDController().setReference(topVelocity, ControlType.kVelocity); 
   }
-
 
   public void setRampRate(double ramp){
     intake_motor.setClosedLoopRampRate(ramp);

@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -166,6 +167,10 @@ public final class Constants {
     public static final double intakeVelocity = intakeSpeedPercent * neoVortexRPM;
   }
 
+   public static class StatusVariables{
+      public static boolean conveyerSwitchOneStatus; 
+      }
+
   public static final class ShooterConstants {
 
     public static final int kTopShooterId = 11;
@@ -177,6 +182,8 @@ public final class Constants {
     // Subwoofer Speed
     public static final double subwooferTopVelocity = neoVortexRPM * 0.23;
     public static final double subwooferBottomVelocity = neoVortexRPM;
+
+   
 
     //______________________SHOOTER MOTOR SETUP______________________//
 
@@ -229,6 +236,9 @@ public final class Constants {
     public static double conveyerSlewLimit = 2; 
 
     public static double conveyerRampRate = 0.25;
+
+    //conveyer sensor stuff
+    public static final int switchOnePort = 0; 
 
   }
 
