@@ -47,16 +47,16 @@ public class conveyorSensorCmd extends Command{
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(CONVEYOR_SUBSYSTEM.getConveyorSwitchOneValue() == false){
-      return true; 
-    }
-    else{
+    //if(CONVEYOR_SUBSYSTEM.getConveyorSwitchOneValue() == false){
+  //    return true; 
+   // }
+   // else{
       return false; 
     }
   }
 
 
-}
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.

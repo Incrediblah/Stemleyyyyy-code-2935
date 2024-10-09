@@ -121,6 +121,8 @@ public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.05;
+    public static final int BUTTON_A_PORT = 1;
+    
   }
 
   public static final class AutoConstants {
@@ -167,9 +169,10 @@ public final class Constants {
     public static final double intakeVelocity = intakeSpeedPercent * neoVortexRPM;
   }
 
-   public static class StatusVariables{
-      public static boolean conveyerSwitchOneStatus; 
-      }
+  public static class StatusVariables{
+
+  }
+     
 
   public static final class ShooterConstants {
 
@@ -180,7 +183,7 @@ public final class Constants {
     //______________________SHOOTER SPEEDS______________________//
 
     // Subwoofer Speed
-    public static final double subwooferTopVelocity = neoVortexRPM * 0.23;
+    public static final double subwooferTopVelocity = neoVortexRPM * 0.23; //0.23
     public static final double subwooferBottomVelocity = neoVortexRPM;
 
    
