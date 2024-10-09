@@ -11,6 +11,7 @@ import java.util.List;
 
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -20,18 +21,25 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.units.Velocity;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ConveyorConstants;
+import frc.robot.Commands.ShooterCmd;
 import frc.robot.Commands.intakeCmd;
+import frc.robot.Commands.ConveyorCommands.conveyorCmd;
 import frc.robot.Subsystems.IntakeSubsystem;
+import frc.robot.Subsystems.ShooterSubsystem;
 import frc.robot.Subsystems.ConveyorSubsystem;
 import frc.robot.Subsystems.DriveSubsystem;
 import java.util.List;
@@ -47,8 +55,10 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
    private final IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
+   private final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
+
    private final ConveyorSubsystem ConveyorSubsystem = new ConveyorSubsystem();
 
   // The driver's controller
@@ -56,7 +66,8 @@ public class RobotContainer {
 
   private final Joystick m_driverController = new Joystick(OIConstants.kDriverControllerPort);
   private final JoystickButton driverStartButton = new JoystickButton(m_driverController, 7);
-  private final CommandGenericHID controllerPrimary = new CommandGenericHID(OIConstants.kDriverControllerPort) ;
+  private final CommandGenericHID controllerPrimary = new CommandGenericHID(OIConstants.kDriverControllerPort);
+  private final JoystickButton PRIMARY_BUTTON_A = new JoystickButton(m_driverController,1);    
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -73,15 +84,30 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRawAxis(1), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRawAxis(0), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRawAxis(4), OIConstants.kDriveDeadband),
-                true, false),
+                true, true),
             m_robotDrive));
   }
 
   private void configureBindings() {
-    controllerPrimary.axisGreaterThan(2, 0.1).toggleOnFalse(new intakeCmd(IntakeSubsystem, 0));
-    controllerPrimary.axisGreaterThan(2, 0.1).toggleOnTrue(new intakeCmd(IntakeSubsystem, IntakeConstants.intakeVelocity));
+    controllerPrimary.axisGreaterThan(2, 0.1).toggleOnFalse
+    (new ParallelDeadlineGroup(
+        new intakeCmd(IntakeSubsystem, 0),
+        new conveyorCmd(ConveyorSubsystem, 0)
+        
+        ));
+    controllerPrimary.axisGreaterThan(2, 0.1).toggleOnTrue(
+        new ParallelDeadlineGroup(
+        new intakeCmd(IntakeSubsystem, IntakeConstants.intakeVelocity),
+        new conveyorCmd(ConveyorSubsystem, ConveyorConstants.kConveyorVelocity)
+        
+        ));
 
-    driverStartButton.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading()));
+   
+
+    PRIMARY_BUTTON_A.onTrue(new ShooterCmd(ShooterSubsystem, ShooterConstants.subwooferTopVelocity, ShooterConstants.subwooferBottomVelocity));
+    PRIMARY_BUTTON_A.onFalse(new ShooterCmd(ShooterSubsystem,0,0));
+
+     driverStartButton.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading()));
 
   }
 

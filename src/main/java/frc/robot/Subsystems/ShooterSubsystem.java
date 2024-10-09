@@ -118,6 +118,11 @@ public class ShooterSubsystem extends SubsystemBase {
         m_bottomShooter.getPIDController().setReference(bottomShooterVelocity, ControlType.kVelocity);
     }
 
+    public void setShooter(double topSpeed, double bottomSpeed){
+        m_topShooter.set(topSpeed);
+        m_bottomShooter.set(-bottomSpeed);
+      }
+
     public void stopShooter() {
         m_topShooter.stopMotor();
         m_bottomShooter.stopMotor();
