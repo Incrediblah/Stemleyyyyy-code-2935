@@ -26,7 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_topShooter.restoreFactoryDefaults();
         m_bottomShooter.restoreFactoryDefaults();
 
-        m_topShooter.setSmartCurrentLimit(50);
+       // m_topShooter.setSmartCurrentLimit(50);
         m_bottomShooter.setSmartCurrentLimit(50);
 
         m_topShooter.setInverted(false);
@@ -117,6 +117,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setBottomShooterVelocity(double bottomShooterVelocity) {
         m_bottomShooter.getPIDController().setReference(bottomShooterVelocity, ControlType.kVelocity);
     }
+
+    public void setShooter(double topShooterVelocity, double bottomShooterVelocity){
+        m_topShooter.set(topShooterVelocity);
+        m_bottomShooter.set(-bottomShooterVelocity);
+      }
 
     public void stopShooter() {
         m_topShooter.stopMotor();
