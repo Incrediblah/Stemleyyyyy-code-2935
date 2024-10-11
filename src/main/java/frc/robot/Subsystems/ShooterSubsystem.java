@@ -26,7 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_topShooter.restoreFactoryDefaults();
         m_bottomShooter.restoreFactoryDefaults();
 
-       // m_topShooter.setSmartCurrentLimit(50);
+        m_topShooter.setSmartCurrentLimit(50);
         m_bottomShooter.setSmartCurrentLimit(50);
 
         m_topShooter.setInverted(false);

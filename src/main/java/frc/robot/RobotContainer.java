@@ -91,7 +91,7 @@ public class RobotContainer {
   }
 
 
-
+ //mapping commands to buttons below
   private void configureBindings() {
 //intake and conveyor sensor control
     controllerPrimary.axisGreaterThan(2, 0.1).toggleOnFalse
@@ -148,7 +148,7 @@ public class RobotContainer {
         new Pose2d(1.5, 0, new Rotation2d(0)),    //should be going in meters
         forwardConfig);
 
-    Trajectory secondTrajectory = TrajectoryGenerator.generateTrajectory(
+        Trajectory secondTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(1.5, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
@@ -157,50 +157,7 @@ public class RobotContainer {
         new Pose2d(0, 0, new Rotation2d(0)),    //should be going in meters
         reverseConfig);
 
-     Trajectory thirdTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(0.5, -1.5)),//, new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(1.5, -1.38, new Rotation2d(0)),    //should be going in meters
-        forwardConfig);
-
-      Trajectory fourthTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(1.5, -1.38, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(0.5, -1.38)),//, new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(0.1, 0, new Rotation2d(0)),    //should be going in meters
-        reverseConfig);
-
-    Trajectory fifthTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0.1, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(0.5, 1.38)),//, new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(1.5, 1.38, new Rotation2d(0)),    //should be going in meters
-        forwardConfig);
-
-    Trajectory sixthTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(1.5, 1.38, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(0.5, 1.38)),//, new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(0.1, 0, new Rotation2d(0)),    //should be going in meters
-        reverseConfig);
-
-    Trajectory seventhTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0.1, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(0, -4)),//, new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(6, -5, new Rotation2d(0)),    //should be going in meters
-        forwardConfig);
+    
 
 
     // Create PID Controllers
@@ -220,88 +177,34 @@ public class RobotContainer {
         m_robotDrive::setModuleStates,
         m_robotDrive);
 
-    SwerveControllerCommand secondCommand = new SwerveControllerCommand(
-        secondTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-        xController,
-        yController,
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
+        SwerveControllerCommand secondCommand = new SwerveControllerCommand(
+            secondTrajectory,
+            m_robotDrive::getPose, // Functional interface to feed supplier
+            DriveConstants.kDriveKinematics,
+            xController,
+            yController,
+            thetaController,
+            m_robotDrive::setModuleStates,
+            m_robotDrive);
 
-    SwerveControllerCommand thirdCommand = new SwerveControllerCommand(
-        thirdTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-        xController,
-        yController,
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
-    SwerveControllerCommand fourthCommand = new SwerveControllerCommand(
-        fourthTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-        xController,
-        yController,
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
-    SwerveControllerCommand fifthCommand = new SwerveControllerCommand(
-        fifthTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-        xController,
-        yController,
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
-    SwerveControllerCommand sixthCommand = new SwerveControllerCommand(
-        sixthTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-        xController,
-        yController,
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
-    SwerveControllerCommand seventhCommand = new SwerveControllerCommand(
-        seventhTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-        xController,
-        yController,
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
+    
     // Run path following command, then stop at the end.
     return new InstantCommand(() -> m_robotDrive.resetOdometry(firstTrajectory.getInitialPose()))
-    .andThen(firstCommand)
-    .andThen(() -> m_robotDrive.stopModules())
+    .andThen(new ParallelDeadlineGroup(firstCommand, new conveyorCmd(ConveyorSubsystem,ConveyorConstants.kConveyorVelocity)))
     .andThen(Commands.waitSeconds(0.15))
-    .andThen(secondCommand)
     .andThen(() -> m_robotDrive.stopModules())
+    .andThen(new ParallelDeadlineGroup(secondCommand, new ShooterCmd(ShooterSubsystem,ShooterConstants.subwooferTopVelocity, ShooterConstants.subwooferBottomVelocity)))
     .andThen(Commands.waitSeconds(0.15))
-    .andThen(thirdCommand)
     .andThen(() -> m_robotDrive.stopModules())
-    .andThen(Commands.waitSeconds(0.15))
-    .andThen(fourthCommand)
-    .andThen(() -> m_robotDrive.stopModules())
-    .andThen(Commands.waitSeconds(0.15))
-    .andThen(fifthCommand)
-    .andThen(() -> m_robotDrive.stopModules())
-    .andThen(Commands.waitSeconds(0.15))
-    .andThen(sixthCommand)
-    .andThen(() -> m_robotDrive.stopModules())
-    .andThen(Commands.waitSeconds(0.15))
-    .andThen(seventhCommand)
-    .andThen(() -> m_robotDrive.stopModules());
+    .andThen(new ShooterCmd(ShooterSubsystem, 0, 0));
+    
+    
+    
+    
+    
 
   }
+    
+     
+
 }
