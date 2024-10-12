@@ -18,6 +18,7 @@ public class ConveyorSubsystem extends SubsystemBase {
     private RelativeEncoder m_ConveyorEncoder = m_Conveyor.getEncoder();
 
      private DigitalInput conveyorSwitch1 = new DigitalInput(ConveyorConstants.switchOnePort); 
+     private DigitalInput conveyorSwitch2 = new DigitalInput(ConveyorConstants.switchTwoport);
 
     public ConveyorSubsystem() {
 
@@ -32,6 +33,7 @@ public class ConveyorSubsystem extends SubsystemBase {
     public void periodic() {
 
         SmartDashboard.putBoolean("sensort one", getConveyorSwitchOneValue()); 
+         SmartDashboard.putBoolean("sensort two", getConveyorSwitchTwoValue()); 
 
     }
 
@@ -79,6 +81,11 @@ public class ConveyorSubsystem extends SubsystemBase {
     public boolean getConveyorSwitchOneValue(){
     StatusVariables.ConveyorSwitchOneStatus = conveyorSwitch1.get();
     return conveyorSwitch1.get(); 
+  }
+
+   public boolean getConveyorSwitchTwoValue(){
+    StatusVariables.ConveyorSwitchTwoStatus = conveyorSwitch2.get();
+    return conveyorSwitch2.get(); 
   }
 
     public void setConveyorVelocity(double conveyorVelocity) {

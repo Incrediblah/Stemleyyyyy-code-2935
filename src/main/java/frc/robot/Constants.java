@@ -124,8 +124,7 @@ public final class Constants {
     public static final int BUTTON_A_PORT = 1;
     public static final int BUTTON_X_PORT = 3;
     public static final double TriggerThreshold = 0.5; 
-    public static final int rightTriggerAxis = 3; 
-    
+   
     
   }
 
@@ -150,9 +149,9 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int intakeMotorCANId = 13; 
-    public static final double intakeSpeedPercent =1; // amps
-    public static final int neoVortexRPM = 6784; 
-    public static final double intakeVelocity = intakeSpeedPercent * neoVortexRPM;
+    //public static final double intakeSpeedPercent = 1; // amps
+    public static final int neoRPM = 5676; 
+    public static final double intakeVelocity = neoRPM;
 
 
    
@@ -247,11 +246,31 @@ public final class Constants {
 
     //conveyer sensor stuff
     public static final int switchOnePort = 0; 
+    public static final int switchTwoport = 1;
 
+  }
+
+  public static class LedConstants {
+
+    public static final int ledPort = 0; 
+
+  
+public static final int ledLength = 60; 
+  
+// INDIVIDUAL COLOUR CODES 
+public static final int[] greenColourCode = {0, 255, 0}; 
+public static final int[] blueColourCode = {0, 0, 255}; 
+public static final int[] redColourCode = {255, 0, 0}; 
+public static final int[] orangeColourCode = {255, 25, 0}; 
+public static final int[] whiteColourCode = {255, 125, 50}; 
+public static final int[] vermillionColourCode = {255, 255, 255}; 
+public static final int[] purpleColourCode = {200, 0, 200}; 
+public static final int[] yellowColourCode = {200, 150, 0}; 
   }
 
   public static class StatusVariables{
     public static boolean ConveyorSwitchOneStatus;
+    public static boolean ConveyorSwitchTwoStatus;
   
 
   }

@@ -31,15 +31,18 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.LedConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ConveyorConstants;
+import frc.robot.Commands.LedCmd;
 import frc.robot.Commands.ShooterCmd;
 import frc.robot.Commands.intakeCmd;
 import frc.robot.Commands.ConveyorCommands.conveyorSensorCmd;
 import frc.robot.Commands.ConveyorCommands.conveyorCmd;
 import frc.robot.Subsystems.IntakeSubsystem;
+import frc.robot.Subsystems.LedSubsystem;
 import frc.robot.Subsystems.ShooterSubsystem;
 import frc.robot.Subsystems.ConveyorSubsystem;
 import frc.robot.Subsystems.DriveSubsystem;
@@ -60,6 +63,9 @@ public class RobotContainer {
    private final IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
    private final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
    private final ConveyorSubsystem ConveyorSubsystem = new ConveyorSubsystem();
+   private final LedSubsystem LedSubsystem = new LedSubsystem();
+   
+
 
   // The driver's controller
   //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -69,15 +75,19 @@ public class RobotContainer {
   private final CommandGenericHID controllerPrimary = new CommandGenericHID(OIConstants.kDriverControllerPort);
   private final JoystickButton PRIMARY_BUTTON_A = new JoystickButton(m_driverController,1);   
   private final JoystickButton PRIMARY_BUTTON_X = new JoystickButton(m_driverController,OIConstants.BUTTON_X_PORT);
-
+ 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    LedSubsystem.setDefaultCommand(new LedCmd (LedSubsystem));
+
     // Configure the button bindings
     configureBindings();
+    
 
     // Configure default commands
+    
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
@@ -114,6 +124,10 @@ public class RobotContainer {
  //shooter subwoofer control
     PRIMARY_BUTTON_A.onTrue(new ShooterCmd(ShooterSubsystem, ShooterConstants.subwooferTopVelocity, ShooterConstants.subwooferBottomVelocity));
     PRIMARY_BUTTON_A.onFalse(new ShooterCmd(ShooterSubsystem,0, 0 ));
+
+   // PRIMARY_BUTTON_A.onTrue(new LedCmd(LedSubsystem));
+    //PRIMARY_BUTTON_A.onFalse(Commands.none());
+
  //zero robot control
      driverStartButton.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading()));
 

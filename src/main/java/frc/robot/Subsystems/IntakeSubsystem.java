@@ -5,7 +5,7 @@
 package frc.robot.Subsystems;
  
 import com.revrobotics.CANSparkFlex;
-//import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -21,7 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private final String INTAKE_PREFIX = "SmartDashboard/Intake"; 
 
-  private CANSparkFlex intake_motor = new CANSparkFlex(IntakeConstants.intakeMotorCANId, MotorType.kBrushless); 
+  private CANSparkMax intake_motor = new CANSparkMax(IntakeConstants.intakeMotorCANId, MotorType.kBrushless); 
   private RelativeEncoder intake_encoder = intake_motor.getEncoder();
 
   /** Creates a new INTAKE_SUBSYSTEM. */

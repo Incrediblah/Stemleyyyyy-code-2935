@@ -26,8 +26,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_topShooter.restoreFactoryDefaults();
         m_bottomShooter.restoreFactoryDefaults();
 
-        m_topShooter.setSmartCurrentLimit(50);
-        m_bottomShooter.setSmartCurrentLimit(50);
+        m_topShooter.setSmartCurrentLimit(30);
+        m_bottomShooter.setSmartCurrentLimit(30);
 
         m_topShooter.setInverted(false);
         m_bottomShooter.setInverted(true);
@@ -44,6 +44,17 @@ public class ShooterSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Shooter Top Roller Speed", getTopShooterVelocity());
         SmartDashboard.putNumber("Shooter Bottom Roller Speed", getBottomShooterVelocity());
+        //SmartDashboard.putBoolean(shooterVelocityReached());
+    }
+
+    public boolean shooterVelocityReached(){
+        if (getTopShooterVelocity()>1500){
+            return true;
+        }
+        else{
+                return false;
+
+            } 
 
     }
 
