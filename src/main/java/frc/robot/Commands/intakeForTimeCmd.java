@@ -8,18 +8,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Subsystems.IntakeSubsystem;
 
-public class intakeCmd extends Command {
+public class intakeForTimeCmd extends Command {
 
   private IntakeSubsystem INTAKE_SUBSYSTEM; 
 
   private double intakeVelocity; 
+  private int counter=0;
+  private int target=0;
+
 
   //private SlewRateLimiter intakeLimiter = new SlewRateLimiter(IntakeConstants.intakeSlewLimit); 
 
   /** Creates a new intakeVelocityCommand. */
-  public intakeCmd(IntakeSubsystem intake, double velocity) {
+  public intakeForTimeCmd(IntakeSubsystem intake, double velocity,double seconds) {
     this.INTAKE_SUBSYSTEM = intake; 
     this.intakeVelocity = velocity;
+    target=(int)(seconds*50);
+
     addRequirements(INTAKE_SUBSYSTEM); 
   }
 
@@ -35,20 +40,24 @@ public class intakeCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(counter< target)
+    {counter++;
+    } 
+
     INTAKE_SUBSYSTEM.setVelocityIntake((intakeVelocity*3)); 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    INTAKE_SUBSYSTEM.setCoastMode();
+  
     INTAKE_SUBSYSTEM.setIntake(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return counter>=target ;
   }
 
 }

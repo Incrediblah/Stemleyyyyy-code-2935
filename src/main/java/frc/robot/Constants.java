@@ -121,16 +121,21 @@ public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.05;
+    public static final int BUTTON_A_PORT = 1;
+    public static final int BUTTON_X_PORT = 3;
+    public static final double TriggerThreshold = 0.5; 
+   
+    
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    public static final double kMaxSpeedMetersPerSecond = 3.5;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3.5;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-    public static final double kPXController = 2.74;
-    public static final double kPYController = 2.74;
+    public static final double kPXController = 2.75;
+    public static final double kPYController = 2.75;
     public static final double kPThetaController = 1;
 
     // Constraint for the motion profiled robot angle controller
@@ -144,9 +149,12 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int intakeMotorCANId = 13; 
-    public static final double intakeSpeedPercent = 0.6; // amps
+    //public static final double intakeSpeedPercent = 1; // amps
+    public static final int neoRPM = 5676; 
+    public static final double intakeVelocity = neoRPM;
 
-    public static final int neoVortexRPM = 6784; 
+
+   
 
     // INTAKE PID Controller
      public static double intakeKp = 6e-5; 
@@ -164,23 +172,22 @@ public final class Constants {
      // SHOOTER MOTOR RAMP RATE 
      public static double intakeRampRate = 0.25;
 
-    public static final double intakeVelocity = intakeSpeedPercent * neoVortexRPM;
   }
 
-   public static class StatusVariables{
-      public static boolean conveyerSwitchOneStatus; 
-      }
+     
 
   public static final class ShooterConstants {
 
     public static final int kTopShooterId = 11;
-    public static final int kBottomShooterId = 12;
+    public static final int kBottomShooterId = 12; 
     public static final int neoVortexRPM = 6784;
+
+  
 
     //______________________SHOOTER SPEEDS______________________//
 
     // Subwoofer Speed
-    public static final double subwooferTopVelocity = neoVortexRPM * 0.23;
+    public static final double subwooferTopVelocity = neoVortexRPM * 0.23; //0.23
     public static final double subwooferBottomVelocity = neoVortexRPM;
 
    
@@ -222,7 +229,7 @@ public final class Constants {
     public static final int kConveyorCANId = 10;
     public static final int neoRPM = 5676;
 
-    public static final double kConveyorVelocity = neoRPM * 0.75;
+    public static final double kConveyorVelocity = neoRPM;
 
     public static double kConveyerKp = 6e-5; 
     public static double kConveyerKi = 0.0000; 
@@ -239,6 +246,32 @@ public final class Constants {
 
     //conveyer sensor stuff
     public static final int switchOnePort = 0; 
+    public static final int switchTwoport = 1;
+
+  }
+
+  public static class LedConstants {
+
+    public static final int ledPort = 0; 
+
+  
+public static final int ledLength = 60; 
+  
+// INDIVIDUAL COLOUR CODES 
+public static final int[] greenColourCode = {0, 255, 0}; 
+public static final int[] blueColourCode = {0, 0, 255}; 
+public static final int[] redColourCode = {255, 0, 0}; 
+public static final int[] orangeColourCode = {255, 25, 0}; 
+public static final int[] whiteColourCode = {255, 125, 50}; 
+public static final int[] vermillionColourCode = {255, 255, 255}; 
+public static final int[] purpleColourCode = {200, 0, 200}; 
+public static final int[] yellowColourCode = {200, 150, 0}; 
+  }
+
+  public static class StatusVariables{
+    public static boolean ConveyorSwitchOneStatus;
+    public static boolean ConveyorSwitchTwoStatus;
+  
 
   }
 
