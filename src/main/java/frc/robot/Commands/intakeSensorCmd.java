@@ -7,19 +7,22 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Subsystems.IntakeSubsystem;
+import frc.robot.Subsystems.ConveyorSubsystem;
 
-public class intakeCmd extends Command {
+public class intakeSensorCmd extends Command {
 
   private IntakeSubsystem INTAKE_SUBSYSTEM; 
+  private ConveyorSubsystem CONVEYOR_SUBSYSTEM;
 
   private double intakeVelocity; 
 
   //private SlewRateLimiter intakeLimiter = new SlewRateLimiter(IntakeConstants.intakeSlewLimit); 
 
   /** Creates a new intakeVelocityCommand. */
-  public intakeCmd(IntakeSubsystem intake, double velocity) {
+  public intakeSensorCmd(IntakeSubsystem intake, double velocity) {
     this.INTAKE_SUBSYSTEM = intake; 
     this.intakeVelocity = velocity;
+    //this.CONVEYOR_SUBSYSTEM = conveyor; 
     addRequirements(INTAKE_SUBSYSTEM); 
   }
 
@@ -48,7 +51,12 @@ public class intakeCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(CONVEYOR_SUBSYSTEM.getConveyorSwitchOneValue() == false){
+      return true; 
+    }
+    else{
+      return false; 
+    }
   }
 
 }
