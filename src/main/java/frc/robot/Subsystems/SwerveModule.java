@@ -9,14 +9,14 @@ import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.math.geometry.Rotation2d;
+//import edu.wpi.first.math.geometry.Rotation2d;
 
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants.ModuleConstants;
-import frc.robot.Constants.DriveConstants;
+//import frc.robot.Constants.DriveConstants;
 
 public class SwerveModule {
     
@@ -163,6 +163,10 @@ public class SwerveModule {
 
     public void resetEncoders() {
         m_drivingEncoder.setPosition(0);
+    }
+
+    public double getVoltage() {
+        return m_drivingSparkFlex.getBusVoltage();
     }
 
 }

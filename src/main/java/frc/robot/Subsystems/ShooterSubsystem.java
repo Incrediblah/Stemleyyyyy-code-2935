@@ -26,8 +26,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_topShooter.restoreFactoryDefaults();
         m_bottomShooter.restoreFactoryDefaults();
 
-        m_topShooter.setSmartCurrentLimit(50);
-        m_bottomShooter.setSmartCurrentLimit(50);
+        m_topShooter.setSmartCurrentLimit(30);
+        m_bottomShooter.setSmartCurrentLimit(30);
 
         m_topShooter.setInverted(false);
         m_bottomShooter.setInverted(true);
@@ -44,6 +44,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Shooter Top Roller Speed", getTopShooterVelocity());
         SmartDashboard.putNumber("Shooter Bottom Roller Speed", getBottomShooterVelocity());
+        SmartDashboard.putBoolean("ShooterVelocity reached", shooterVelocityReached());
+        
+    }
+
+    public boolean shooterVelocityReached(){
+        if (getTopShooterVelocity()>1500 && getBottomShooterVelocity()>6000){
+            return true;
+        }
+        else{
+                return false;
+
+            } 
 
     }
 
@@ -117,6 +129,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setBottomShooterVelocity(double bottomShooterVelocity) {
         m_bottomShooter.getPIDController().setReference(bottomShooterVelocity, ControlType.kVelocity);
     }
+
+    public void setShooter(double topShooterVelocity, double bottomShooterVelocity){
+        m_topShooter.set(topShooterVelocity);
+        m_bottomShooter.set(-bottomShooterVelocity);
+      }
 
     public void stopShooter() {
         m_topShooter.stopMotor();

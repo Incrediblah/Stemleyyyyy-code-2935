@@ -1,8 +1,7 @@
 package frc.robot.Subsystems;
 import frc.robot.Constants.ConveyorConstants;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.StatusVariables;
-
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
@@ -18,8 +17,8 @@ public class ConveyorSubsystem extends SubsystemBase {
     private CANSparkMax m_Conveyor = new CANSparkMax(ConveyorConstants.kConveyorCANId, MotorType.kBrushless);
     private RelativeEncoder m_ConveyorEncoder = m_Conveyor.getEncoder();
 
-    //more conveyer sensor stuff
-    private DigitalInput conveyorSwitch1 = new DigitalInput(ConveyorConstants.switchOnePort); 
+     private DigitalInput conveyorSwitch1 = new DigitalInput(ConveyorConstants.switchOnePort); 
+     private DigitalInput conveyorSwitch2 = new DigitalInput(ConveyorConstants.switchTwoport);
 
     public ConveyorSubsystem() {
 
@@ -32,6 +31,9 @@ public class ConveyorSubsystem extends SubsystemBase {
     }
 
     public void periodic() {
+
+        SmartDashboard.putBoolean("sensort one", getConveyorSwitchOneValue()); 
+         SmartDashboard.putBoolean("sensort two", getConveyorSwitchTwoValue()); 
 
     }
 
@@ -54,6 +56,8 @@ public class ConveyorSubsystem extends SubsystemBase {
         m_Conveyor.getPIDController().setReference(0, ControlType.kVelocity);
     }
 
+    
+
     public void setConveyorBrakeMode() {
         m_Conveyor.setIdleMode(IdleMode.kBrake);
     }
@@ -66,10 +70,6 @@ public class ConveyorSubsystem extends SubsystemBase {
         m_ConveyorEncoder.setPosition(0);
     }
 
-      public void setConveyorVelocity(double conveyorVelocity) {
-        m_Conveyor.getPIDController().setReference(conveyorVelocity, ControlType.kVelocity);
-    }
-
     public double getConveyorEncoderPosition() {
         return m_ConveyorEncoder.getPosition();
     }
@@ -78,17 +78,21 @@ public class ConveyorSubsystem extends SubsystemBase {
         return m_ConveyorEncoder.getVelocity();
     }
 
-    public void setConveyorCoastMode(double conveyorVelocity) {
+    public boolean getConveyorSwitchOneValue(){
+    StatusVariables.ConveyorSwitchOneStatus = conveyorSwitch1.get();
+    return conveyorSwitch1.get(); 
+  }
+
+   public boolean getConveyorSwitchTwoValue(){
+    StatusVariables.ConveyorSwitchTwoStatus = conveyorSwitch2.get();
+    return conveyorSwitch2.get(); 
+  }
+
+    public void setConveyorVelocity(double conveyorVelocity) {
         m_Conveyor.getPIDController().setReference(conveyorVelocity, ControlType.kVelocity);
     }
 
-    //conveyer sensor if active or not
-    public boolean getConveyorSwitchOneValue(){
-        StatusVariables.conveyerSwitchOneStatus = conveyorSwitch1.get();
-        return conveyorSwitch1.get(); 
-      }
-
-    public void stop() {
+    public void conveyerStop() {
         m_Conveyor.stopMotor();
     }
 
