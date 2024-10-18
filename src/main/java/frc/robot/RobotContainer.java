@@ -45,6 +45,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ConveyorConstants;
 //import frc.robot.Commands.LedCmd;
 import frc.robot.Commands.ShooterCmd;
+import frc.robot.Commands.ThreeNoteAuto;
 import frc.robot.Commands.conveyorCmd;
 import frc.robot.Commands.conveyorSensorCmd;
 import frc.robot.Commands.intakeCmd;
@@ -81,6 +82,9 @@ public class RobotContainer {
 
    private final XboxController m_controllerPrimary = new XboxController(0);
 
+   //autos
+   private final Command ThreeNote = new ThreeNoteAuto(m_robotDrive, ShooterSubsystem, IntakeSubsystem, ConveyorSubsystem);
+
   
 
 
@@ -94,20 +98,23 @@ public class RobotContainer {
   private final JoystickButton PRIMARY_BUTTON_X = new JoystickButton(m_driverController,OIConstants.BUTTON_X_PORT);
   private final JoystickButton PRIMARY_BUTTON_B= new JoystickButton(m_driverController,OIConstants.BUTTON_B_PORT);
   private final JoystickButton PRIMARY_BUTTON_LB= new JoystickButton(m_driverController,OIConstants.BUTTON_LB_PORT);
+  private final JoystickButton PRIMARY_BUTTON_Y= new JoystickButton(m_driverController,OIConstants.BUTTON_Y_PORT);
+
   private final POVButton PRIMARY_DPAD_UP = new POVButton(m_driverController, OIConstants.DpadUp);
  
- 
+  SendableChooser<Command> m_autoChooser = new SendableChooser<>(); 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_autoChooser.setDefaultOption("Three note", ThreeNote);
     
 
     
    
 
    
-    
+    Shuffleboard.getTab("Autonomous").add(m_autoChooser); 
 
     // Configure the button bindings
     configureBindings();
@@ -163,15 +170,27 @@ public class RobotContainer {
  //PRIMARY_BUTTON_X.onFalse(new ShooterCmd(ShooterSubsystem,0, 0 ));
 
 //snaps and pass
-PRIMARY_BUTTON_B.onTrue(
+PRIMARY_BUTTON_Y.onTrue(
 (new ParallelCommandGroup(
 (new turnToAngleCmd(m_robotDrive, -35)),
 (new ShooterCmd(ShooterSubsystem,ShooterConstants.passTopVelocity, ShooterConstants.passBottomVelocity)))));
 
-PRIMARY_BUTTON_B.onFalse(new ShooterCmd(ShooterSubsystem,0, 0 ));
+PRIMARY_BUTTON_Y.onFalse(new ShooterCmd(ShooterSubsystem,0, 0 ));
 
+//outake
 PRIMARY_BUTTON_LB.onTrue(new intakeCmd(IntakeSubsystem, IntakeConstants.intakebackVelocity));
 PRIMARY_BUTTON_LB.onFalse(new intakeCmd(IntakeSubsystem, 0));
+
+// snaps and flat pass
+PRIMARY_BUTTON_B.onTrue(
+(new ParallelCommandGroup(
+(new turnToAngleCmd(m_robotDrive, 0)),
+(new ShooterCmd(ShooterSubsystem,ShooterConstants.flatpassTopVelocity, ShooterConstants.flatpassBottomVelocity)))));
+
+PRIMARY_BUTTON_B.onFalse(new ShooterCmd(ShooterSubsystem,0, 0 ));
+
+
+
 
 
 
@@ -369,26 +388,24 @@ PRIMARY_BUTTON_LB.onFalse(new intakeCmd(IntakeSubsystem, 0));
    
 
         new ParallelCommandGroup(
-        thirdCommand,
-        new conveyorSensorCmd(ConveyorSubsystem,ConveyorConstants.kConveyorVelocity),
-        new intakeForTimeCmd(IntakeSubsystem,IntakeConstants.intakeVelocity, 4)
-        ),
-        
-        new turnToAngleCmd(m_robotDrive, -15),
-        
-         
-        new ParallelCommandGroup(
-            new SequentialCommandGroup(
-            new InstantCommand(() -> m_robotDrive.stopModules()),
-            new ShootForTimeCmd(ShooterSubsystem, ShooterConstants.autolineTopVelocity,ShooterConstants.autolineBottomVelocity,2)
+            thirdCommand,
+            
+            new conveyorSensorCmd(ConveyorSubsystem,ConveyorConstants.kConveyorVelocity),
+            new intakeForTimeCmd(IntakeSubsystem,IntakeConstants.intakeVelocity, 4)
             ),
-            new SequentialCommandGroup(
-                new WaitCommand(1.5),
-                new  conveyForTimeCmd(ConveyorSubsystem, ConveyorConstants.kConveyorVelocity,1)
-            )
-        ));
-       
-    
+            
+            fourthCommand,
+            
+             
+            new ParallelCommandGroup(
+                new SequentialCommandGroup(
+                new InstantCommand(() -> m_robotDrive.stopModules()),
+                new ShootForTimeCmd(ShooterSubsystem, ShooterConstants.subwooferTopVelocity,ShooterConstants.subwooferBottomVelocity,2)
+                ),
+                new SequentialCommandGroup(
+                    new WaitCommand(1.35),
+                    new  conveyForTimeCmd(ConveyorSubsystem, ConveyorConstants.kConveyorVelocity,1)
+                )));
 
   }
     

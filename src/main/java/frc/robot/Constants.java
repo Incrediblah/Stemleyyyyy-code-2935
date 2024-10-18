@@ -132,6 +132,8 @@ public final class Constants {
     public static final double TriggerThreshold = 0.5; 
     public static final int StartButton=7;
     public static final int BUTTON_LB_PORT = 5;
+    public static final int BUTTON_Y_PORT = 4;
+
 
     
 
@@ -145,8 +147,8 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-    public static final double kPXController = 2.75;
-    public static final double kPYController = 2.75;
+    public static final double kPXController = 2.5;
+    public static final double kPYController = 2.5;
     public static final double kPThetaController = 1;
 
     // Constraint for the motion profiled robot angle controller
@@ -212,6 +214,12 @@ public final class Constants {
     //Pass speed
     public static final double passTopVelocity=neoVortexRPM*0.65;
     public static final double passBottomVelocity=neoVortexRPM*0.75;
+
+    //Flat pass speed
+    public static final double flatpassTopVelocity= neoVortexRPM;
+    public static final double flatpassBottomVelocity= neoVortexRPM*0.2;
+
+    
 
    
 

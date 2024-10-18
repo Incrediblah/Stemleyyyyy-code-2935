@@ -49,7 +49,7 @@ public class conveyForTimeCmd extends Command {
     if(counter< target)
     {counter++;
     } 
-    CONVEYOR_SUBSYSTEM.setConveyorVelocity(conveyorVelocity*3);
+    CONVEYOR_SUBSYSTEM.setConveyorVelocity(conveyorVelocity*.75);
   }
 
   // Called once the command ends or is interrupted.

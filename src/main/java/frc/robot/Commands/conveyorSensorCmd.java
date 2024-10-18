@@ -43,7 +43,7 @@ public class conveyorSensorCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    CONVEYOR_SUBSYSTEM.setConveyorVelocity((conveyorVelocity*1.5)); 
+    CONVEYOR_SUBSYSTEM.setConveyorVelocity((conveyorVelocity*.75)); 
   }
 
   // Called once the command ends or is interrupted.
